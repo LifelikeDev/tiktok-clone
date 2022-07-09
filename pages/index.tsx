@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 
 const Home: NextPage = () => {
   return (
-    <div className='underline text-red-500'>
+    <div>
       TikTok Clone
     </div>
   )
