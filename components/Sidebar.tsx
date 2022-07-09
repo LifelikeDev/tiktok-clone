@@ -1,9 +1,70 @@
-import React from 'react'
+import React, { useState } from "react";
+import Link from "next/link";
+import { NextPage } from "next";
+import { useRouter } from "next/router";
+import GoogleLogin from "react-google-login";
+import { AiFillHome, AiOutlineMenu } from "react-icons/ai";
+import { ImCancelCircle } from "react-icons/im";
 
-const Sidebar = () => {
+const Sidebar: NextPage = () => {
+  const [showSidebar, setShowSidebar] = useState(true);
+
+  const userProfile = false;
+
+  const activeLink =
+    "flex items-center gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointer font-semibold text-[#F51997] rounded";
+
+  const normalLink =
+    "flex items-center gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointer font-semibold rounded";
+
   return (
-    <div>Sidebar</div>
-  )
-}
+    <div>
+      <div
+        className="block xl:hidden m-2 ml-4 mt-3 text-xl cursor-pointer"
+        onClick={() => setShowSidebar((prevState) => !prevState)}
+      >
+        {showSidebar ? <ImCancelCircle /> : <AiOutlineMenu />}
+      </div>
+      {showSidebar && (
+        <div className="xl:w-400 w-20 flex flex-col justify-start mb-10 border-r-2 border-gray-100 xl:border-0 p-3">
+          <div className="xl:border-b-2 border-gray-200 xl:pb-4">
+            <Link href="/">
+              <div className={normalLink}>
+                <p className="text-2xl">
+                  <AiFillHome />
+                </p>
+                <span className="text-xl hidden xl:block">For You</span>
+              </div>
+            </Link>
+          </div>
+          {!userProfile && (
+            <div className="px-2 py-4 hidden xl:block">
+              <p className="text-gray-400">
+                Login to like and comment on videos
+              </p>
+              <div className="pr-4">
+                <GoogleLogin
+                  clientId=""
+                  render={(renderProps) => (
+                    <button
+                    className="bg-white hover:bg-[#F51997] text-lg text-[#F51997] border-[1px] border-[#F51997] hover:text-white font-semibold px-4 py-2 cursor-pointer rounded-md outline-none w-full mt-3"
+                      onClick={renderProps.onClick}
+                      disabled={renderProps.disabled}
+                    >
+                      Log in
+                    </button>
+                  )}
+                  onSuccess={() => {}}
+                  onFailure={() => {}}
+                  cookiePolicy="single_host_origin"
+                />
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
 
-export default Sidebar
+export default Sidebar;
