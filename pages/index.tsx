@@ -1,7 +1,13 @@
 import type { NextPage } from "next";
 import axios from "axios";
+import { Video } from "../types.dev";
 
-const Home: NextPage = () => {  
+interface IProps {
+  videos: Video[]
+}
+
+const Home = ({videos}: IProps) => {  
+  console.log(videos);
 
   return <div>TikTok Clone</div>;
 };
