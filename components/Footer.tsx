@@ -5,7 +5,7 @@ import {
   footerList1,
   footerList2,
   footerList3,
-} from "../utils/utils/constants";
+} from "../utils/constants";
 
 const List = ({ list, mt }: { list: string[]; mt: boolean }) => {
   return (
