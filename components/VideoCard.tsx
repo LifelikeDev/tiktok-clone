@@ -32,6 +32,16 @@ const VideoCard: NextPage<VideoCardProps> = ({ post, isShowingOnHome }) => {
               </>
             </Link>
           </div>
+
+          <Link href="/">
+            <div className="flex items-center gap-2">
+              <p className="flex items-center gap-2 md:text-md font-bold text-primary">
+                {post.postedBy.userName}
+                <GoVerified className="text-[#F51997] text-md" />
+              </p>
+                <p className="capitalize text-gray-500 text-xs font-medium hidden md:block">{post.postedBy.userName}</p>
+            </div>
+          </Link>
         </div>
       </div>
     </div>
