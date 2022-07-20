@@ -6,11 +6,13 @@ import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import { AiOutlineLogout } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
-import Logo from '../utils/tiktik-logo.png';
+import Logo from "../utils/tiktik-logo.png";
 import { createOrGetUser } from "../utils";
 
+import useAuthStore from "../store/authStore";
+
 const Navbar = () => {
-  const user = false;
+  const { userProfile, addUser } = useAuthStore();
 
   return (
     <div className="w-full flex justify-between items-center border-b-2 border-gray-200 px-2 py-4">
@@ -28,16 +30,15 @@ const Navbar = () => {
       <div>Search</div>
 
       <div>
-        {user ? (
-          <div>Logged in</div>
+        {userProfile ? (
+          <div>{userProfile.userName}</div>
         ) : (
-          <GoogleLogin 
-            onSuccess={(res) => createOrGetUser(res)}
+          <GoogleLogin
+            onSuccess={(res) => createOrGetUser(res, addUser)}
             onError={() => console.log(`error encoutered...`)}
           />
         )}
       </div>
-
     </div>
   );
 };
