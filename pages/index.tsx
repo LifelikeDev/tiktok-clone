@@ -9,7 +9,6 @@ interface IProps {
 }
 
 const Home: NextPage<IProps> = ({ videos }) => {
-  console.log(videos);
 
   return (
     <div className="flex flex-col h-full gap-10 videos">
