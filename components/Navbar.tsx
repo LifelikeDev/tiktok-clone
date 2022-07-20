@@ -12,7 +12,12 @@ import { createOrGetUser } from "../utils";
 import useAuthStore from "../store/authStore";
 
 const Navbar = () => {
-  const { userProfile, addUser } = useAuthStore();
+  const { userProfile, addUser, removeUser } = useAuthStore();
+
+  const handleUserLogout = (): void => {
+    googleLogout();
+    removeUser();
+  }
 
   return (
     <div className="w-full flex justify-between items-center border-b-2 border-gray-200 px-2 py-4">
@@ -30,7 +35,7 @@ const Navbar = () => {
       <div>Search</div>
 
       <div>
-        {userProfile ? (
+        {userProfile._id ? (
           <div className="flex gap-5 md:gap-10">
             <Link href="/upload">
               <button className="flex items-center border-2 gap-2 rounded py-1 px-4 font-semibold text-md hover:bg-[#F51997] hover:text-white">
@@ -52,7 +57,9 @@ const Navbar = () => {
               </Link>
             )}
 
-            <button type="button" className="px-2 text-[#F51997] hover:rounded-full hover:bg-gray-100">
+            <button type="button" className="px-2 text-[#F51997] hover:rounded-full hover:bg-gray-100"
+              onClick={handleUserLogout}
+            >
               <AiOutlineLogout fontSize={24} />
             </button>
           </div>

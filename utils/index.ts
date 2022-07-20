@@ -1,18 +1,25 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
-interface Decoded {
+export interface AppUser {
+  _id: string;
+  _type: string;
+  userName: string;
+  image: string;
+}
+
+interface DecodedUserDetails {
   name: string;
   picture: string;
   sub: string;
 }
 
 export const createOrGetUser = async (response: any, addUser: any) => {
-  const decoded: Decoded = jwt_decode(response.credential);
+  const decoded: DecodedUserDetails = jwt_decode(response.credential);
 
   const { name, picture, sub } = decoded;
 
-  const user = {
+  const user: AppUser = {
     _id: sub,
     _type: "user",
     userName: name,
