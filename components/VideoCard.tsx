@@ -48,8 +48,8 @@ const VideoCard: NextPage<VideoCardProps> = ({ post, isShowingOnHome }) => {
               <>
                 <Image
                   src={post.postedBy.image}
-                  width={62}
-                  height={62}
+                  width={42}
+                  height={42}
                   className="rounded-full"
                   alt="profile"
                   layout="responsive"

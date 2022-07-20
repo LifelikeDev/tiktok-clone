@@ -31,7 +31,31 @@ const Navbar = () => {
 
       <div>
         {userProfile ? (
-          <div>{userProfile.userName}</div>
+          <div className="flex gap-5 md:gap-10">
+            <Link href="/upload">
+              <button className="flex items-center border-2 gap-2 rounded py-1 px-4 font-semibold text-md hover:bg-[#F51997] hover:text-white">
+                <IoMdAdd className="text-xl" /> {` `}{" "}
+                <span className="hidden md:block">Upload</span>
+              </button>
+            </Link>
+            {userProfile.image && (
+              <Link href="">
+                <>
+                  <Image
+                    src={userProfile.image}
+                    width={36}
+                    height={36}
+                    className="rounded-full cursor-pointer"
+                    alt="profile"
+                  />
+                </>
+              </Link>
+            )}
+
+            <button type="button" className="px-2 text-[#F51997] hover:rounded-full hover:bg-gray-100">
+              <AiOutlineLogout fontSize={24} />
+            </button>
+          </div>
         ) : (
           <GoogleLogin
             onSuccess={(res) => createOrGetUser(res, addUser)}
