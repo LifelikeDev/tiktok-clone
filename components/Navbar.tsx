@@ -66,7 +66,7 @@ const Navbar = () => {
         ) : (
           <GoogleLogin
             onSuccess={(res) => createOrGetUser(res, addUser)}
-            onError={() => console.log(`error encoutered...`)}
+            onError={() => alert("Sorry. Login Failed...")}
           />
         )}
       </div>
