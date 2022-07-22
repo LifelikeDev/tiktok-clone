@@ -10,6 +10,11 @@ const Upload = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [videoAsset, setVideoAsset] = useState(null);
 
+  const handleVideoUpload = async(event: any) => {
+    const selectedFiles = event?.target?.files[0];
+
+  }
+
   return (
     <div className="flex w-full h-full">
       <div className="bg-white rounded-lg">
@@ -34,8 +39,18 @@ const Upload = () => {
                         <p className="font-bold text-xl">
                           <FaCloudUploadAlt className="text-6xl text-gray-300" />
                         </p>
-                        <p className="text-md font-semibold text-center">Upload Video</p>
+                        <p className="text-md font-semibold text-center">
+                          Upload Video
+                        </p>
+                        <p className="text-gray-400 text-center mt-5 text-sm leading-7">
+                          MP4 or WebM or ogg <br />
+                          720x1280 or higher <br />
+                          Up to 10 minutes <br />
+                          Less than 2GB
+                        </p>
+                        <p className="bg-red-600 hover:bg-red-700 text-center mt-10 rounded text-white text-md font-medium p-2 w-52 outline-none">Select File to Upload</p>
                       </div>
+                      <input type="file" onChange={handleVideoUpload} className="h-0 w-0"/>
                     </div>
                   </label>
                 )}
