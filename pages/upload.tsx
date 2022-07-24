@@ -6,6 +6,7 @@ import { MdDelete } from "react-icons/md";
 import useAuthStore from "../store/authStore";
 import { client } from "../utils/client";
 import { SanityAssetDocument } from "@sanity/client";
+import { topics } from "../utils/constants";
 
 const Upload = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -13,12 +14,14 @@ const Upload = () => {
     SanityAssetDocument | undefined
   >();
   const [wrongFileType, setWrongFileType] = useState(false);
+  const [caption, setCaption] = useState("");
 
   const handleVideoUpload = async (event: any) => {
     const selectedFile = event.target.files[0];
     const fileTypes = ["video/mp4", "video/webm", "video/ogg"];
 
     if (fileTypes.includes(selectedFile.type)) {
+      setIsLoading(true);
       client.assets
         .upload("file", selectedFile, {
           contentType: selectedFile.type,
@@ -27,6 +30,10 @@ const Upload = () => {
         .then((data) => {
           setVideoAsset(data);
           setIsLoading(false);
+
+          if (wrongFileType) {
+            setWrongFileType(false);
+          }
         });
     } else {
       setIsLoading(false);
@@ -35,9 +42,9 @@ const Upload = () => {
   };
 
   return (
-    <div className="flex w-full h-full">
-      <div className="bg-white rounded-lg">
-        <>
+    <div className="flex w-full h-full absolute left-0 top-[60px] lg:top-[70px] mb-10 pt-10 lg:pt-12 bg-[#F8F8F8] justify-center">
+      <div className="bg-white rounded-lg w-[70%] xl:h-[80vh] flex gap-6 flex-wrap justify-center items-center p-14 pt-6">
+        <div>
           <div>
             <p className="text-2xl font-bold">Upload</p>
             <p className="text-md text-gray-400 mt-1">
@@ -75,8 +82,8 @@ const Upload = () => {
                         Up to 10 minutes <br />
                         Less than 2GB
                       </p>
-                      <p className="bg-red-600 hover:bg-red-700 text-center mt-10 rounded text-white text-md font-medium p-2 w-52 outline-none">
-                        Select File to Upload
+                      <p className="bg-[#F51997] hover:bg-[#E60484] text-center mt-10 rounded text-white text-md font-medium p-2 w-52 outline-none">
+                        Select File
                       </p>
                     </div>
                     <input
@@ -86,10 +93,49 @@ const Upload = () => {
                     />
                   </label>
                 )}
+                {/* Wrong File Type */}
+                {wrongFileType && (
+                  <p className="text-center text-md font-semibold text-red-400 mt-6 w-[250px]">
+                    File type not supported. Please choose another video.
+                  </p>
+                )}
               </div>
             )}
           </div>
-        </>
+        </div>
+        {/* Caption */}
+        <div className="flex flex-col gap-3 pb-10">
+          <label className="font-medium text-md">Caption</label>
+          <input
+            type="text"
+            value={caption}
+            onChange={(e) => setCaption(e.target.value)}
+            className="rounded lg:after:w-650 outline-none text-md border-2 border-gray-200 px-2 py-1"
+          />
+          <label className="text-md font-medium">Select a Category</label>
+          <select
+            className="px-2 py-1 border-2 capitalize cursor-pointer"
+            onChange={() => {}}
+          >
+            {topics.map((topic) => (
+              <option
+                key={topic.name}
+                className="p-2 capitalize"
+                value={topic.name}
+              >
+                {topic.name}
+              </option>
+            ))}
+          </select>
+          <div className="flex gap-6 mt-8">
+            <button className="border-gray-300 border-2 text-md font-medium p-2 rounded w-28 lg:w-40">
+              Discard
+            </button>
+            <button className="bg-[#F51997] hover:bg-[#E60484] text-white text-md font-medium p-2 rounded w-28 lg:w-40">
+              Post
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
