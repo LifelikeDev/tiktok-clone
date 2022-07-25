@@ -15,6 +15,10 @@ const Upload = () => {
   >();
   const [wrongFileType, setWrongFileType] = useState(false);
   const [caption, setCaption] = useState("");
+  const [category, setCategory] = useState(topics[0].name);
+  const [savingPost, setSavingPost] = useState(false);
+  const { userProfile } = useAuthStore();
+  const router = useRouter();
 
   const handleVideoUpload = async (event: any) => {
     const selectedFile = event.target.files[0];
@@ -38,6 +42,36 @@ const Upload = () => {
     } else {
       setIsLoading(false);
       setWrongFileType(true);
+    }
+  };
+
+  const handlePost = async () => {
+    // e.preventDefault();
+
+    if (caption && videoAsset?._id && category) {
+      setSavingPost(true);
+
+      const document = {
+        _type: "post",
+        caption,
+        video: {
+          _type: "file",
+          asset: {
+            _type: "reference",
+            _ref: videoAsset?._id,
+          },
+        },
+        userId: userProfile?._id,
+        postedBy: {
+          _type: "postedBy",
+          _ref: userProfile?._id,
+        },
+        topic: category,
+      };
+
+      await axios.post(`http://localhost:3000/api/post`, document);
+
+      router.push("/");
     }
   };
 
@@ -114,8 +148,11 @@ const Upload = () => {
           />
           <label className="text-md font-medium">Select a Category</label>
           <select
+            value={category}
             className="px-2 py-1 border-2 capitalize cursor-pointer"
-            onChange={() => {}}
+            onChange={(e) => {
+              setCategory(e.target.value);
+            }}
           >
             {topics.map((topic) => (
               <option
@@ -131,7 +168,10 @@ const Upload = () => {
             <button className="border-gray-300 border-2 text-md font-medium p-2 rounded w-28 lg:w-40">
               Discard
             </button>
-            <button className="bg-[#F51997] hover:bg-[#E60484] text-white text-md font-medium p-2 rounded w-28 lg:w-40">
+            <button
+              onClick={handlePost}
+              className="bg-[#F51997] hover:bg-[#E60484] text-white text-md font-medium p-2 rounded w-28 lg:w-40"
+            >
               Post
             </button>
           </div>
