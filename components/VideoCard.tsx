@@ -82,7 +82,7 @@ const VideoCard: NextPage<VideoCardProps> = ({ post, isShowingOnHome }) => {
             setIsHover(false);
           }}
         >
-          <Link href="">
+          <Link href={`/detail/${post._id}`}>
             <video
               ref={videoRef}
               src={post.video.asset.url}
