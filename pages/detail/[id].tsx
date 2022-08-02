@@ -16,7 +16,8 @@ interface IProps {
 
 const Detail = ({ postDetails }: IProps) => {
   const [post, setPost] = useState(postDetails);
-  const [isPlaying, setIsPlaying] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isVideoMuted, setIsVideoMuted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleVideoClick = () => {
@@ -28,6 +29,12 @@ const Detail = ({ postDetails }: IProps) => {
       setIsPlaying(true);
     }
   };
+
+  useEffect(() => {
+    if (post && videoRef?.current) {
+      videoRef.current.muted = isVideoMuted;
+    }
+  }, [post, isVideoMuted]);
 
   if (!post) return null;
 
@@ -50,13 +57,25 @@ const Detail = ({ postDetails }: IProps) => {
             ></video>
           </div>
 
-          <div className='absolute top-[45%] left-[40%]  cursor-pointer'>
-          {!isPlaying && (
-                  <button onClick={handleVideoClick}>
-                    <BsFillPlayFill className='text-white text-6xl lg:text-8xl' />
-                  </button>
-                )}
+          <div className="absolute top-[45%] left-[40%]  cursor-pointer">
+            {!isPlaying && (
+              <button onClick={handleVideoClick}>
+                <BsFillPlayFill className="text-white text-6xl lg:text-8xl" />
+              </button>
+            )}
           </div>
+        </div>
+
+        <div className="absolute bottom-5 lg:bottom-10 right-5 lg:right-10  cursor-pointer">
+          {isVideoMuted ? (
+            <button onClick={() => setIsVideoMuted(false)}>
+              <HiVolumeOff className="text-white text-3xl lg:text-4xl" />
+            </button>
+          ) : (
+            <button onClick={() => setIsVideoMuted(true)}>
+              <HiVolumeUp className="text-white text-3xl lg:text-4xl" />
+            </button>
+          )}
         </div>
       </div>
     </div>
