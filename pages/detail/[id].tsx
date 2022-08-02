@@ -16,9 +16,18 @@ interface IProps {
 
 const Detail = ({ postDetails }: IProps) => {
   const [post, setPost] = useState(postDetails);
-  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-  const handleVideoClick = () => {};
+  const handleVideoClick = () => {
+    if (isPlaying) {
+      videoRef?.current?.pause();
+      setIsPlaying(false);
+    } else {
+      videoRef?.current?.play();
+      setIsPlaying(true);
+    }
+  };
 
   if (!post) return null;
 
@@ -39,6 +48,14 @@ const Detail = ({ postDetails }: IProps) => {
               src={post?.video?.asset.url}
               className=" h-full cursor-pointer"
             ></video>
+          </div>
+
+          <div className='absolute top-[45%] left-[40%]  cursor-pointer'>
+          {!isPlaying && (
+                  <button onClick={handleVideoClick}>
+                    <BsFillPlayFill className='text-white text-6xl lg:text-8xl' />
+                  </button>
+                )}
           </div>
         </div>
       </div>
