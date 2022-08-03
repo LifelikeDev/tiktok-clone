@@ -9,6 +9,9 @@ import { GoVerified } from "react-icons/go";
 import { MdOutlineCancel } from "react-icons/md";
 import { BASE_URL } from "../../utils";
 import { Video } from "../../types.dev";
+import useAuthStore from "../../store/authStore";
+import LikeButton from "../../components/LikeButton";
+import Comments from "../../components/Comments";
 
 interface IProps {
   postDetails: Video;
@@ -20,6 +23,7 @@ const Detail = ({ postDetails }: IProps) => {
   const [isVideoMuted, setIsVideoMuted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const router = useRouter();
+  const { userProfile } = useAuthStore();
 
   const handleVideoClick = () => {
     if (isPlaying) {
@@ -99,7 +103,7 @@ const Detail = ({ postDetails }: IProps) => {
             </div>
 
             <Link href="/">
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col mt-2 gap-2">
                 <p className="flex items-center gap-2 md:text-md font-bold text-primary">
                   {post.postedBy.userName}
                   <GoVerified className="text-[#F51997] text-md" />
@@ -111,6 +115,11 @@ const Detail = ({ postDetails }: IProps) => {
             </Link>
           </div>
         </div>
+
+        <p className="px-10 text-lg text-gray-600">{post.caption}</p>
+
+        <div className="mt-10 px-10">{userProfile && <LikeButton />}</div>
+        <Comments />
       </div>
     </div>
   );
