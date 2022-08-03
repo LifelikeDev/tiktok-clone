@@ -19,6 +19,7 @@ const Detail = ({ postDetails }: IProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isVideoMuted, setIsVideoMuted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const router = useRouter();
 
   const handleVideoClick = () => {
     if (isPlaying) {
@@ -42,7 +43,7 @@ const Detail = ({ postDetails }: IProps) => {
     <div className="flex w-full absolute left-0 top-0 bg-white flex-wrap lg:flex-nowrap">
       <div className="relative flex-2 w-[1000px] lg:w-9/12 flex justify-center items-center bg-[#555]">
         <div className="opacity-90 absolute top-6 left-2 lg:left-6 flex gap-6 z-50">
-          <p className="cursor-pointer " onClick={() => {}}>
+          <p className="cursor-pointer " onClick={() => router.back()}>
             <MdOutlineCancel className="text-white text-[35px] hover:opacity-90" />
           </p>
         </div>
@@ -76,6 +77,39 @@ const Detail = ({ postDetails }: IProps) => {
               <HiVolumeUp className="text-white text-3xl lg:text-4xl" />
             </button>
           )}
+        </div>
+      </div>
+
+      <div className="relative w-[1000px] md:w-[900px] lg:w-[700px]">
+        <div className="lg:mt-20 mt-10 ml-3">
+          <div className="flex gap-3 p-2 cursor-pointer font-semibold rounded ">
+            <div className="md:w-20 md:h-20 w-16 h-16">
+              <Link href="">
+                <>
+                  <Image
+                    src={post.postedBy.image}
+                    width={42}
+                    height={42}
+                    className="rounded-full"
+                    alt="profile"
+                    layout="responsive"
+                  />
+                </>
+              </Link>
+            </div>
+
+            <Link href="/">
+              <div className="flex items-center gap-2">
+                <p className="flex items-center gap-2 md:text-md font-bold text-primary">
+                  {post.postedBy.userName}
+                  <GoVerified className="text-[#F51997] text-md" />
+                </p>
+                <p className="capitalize text-gray-500 text-xs font-medium hidden md:block">
+                  {post.postedBy.userName}
+                </p>
+              </div>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
