@@ -41,6 +41,18 @@ const Detail = ({ postDetails }: IProps) => {
     }
   }, [post, isVideoMuted]);
 
+  const handleLike = async (like: boolean) => {
+    if (userProfile) {
+      const { data } = await axios.put(`${BASE_URL}/api/like`, {
+        userId: userProfile._id,
+        postId: post._id,
+        like,
+      });
+
+      setPost({ ...post, likes: data.likes });
+    }
+  };
+
   if (!post) return null;
 
   return (
@@ -118,7 +130,15 @@ const Detail = ({ postDetails }: IProps) => {
 
         <p className="px-10 text-lg text-gray-600">{post.caption}</p>
 
-        <div className="mt-10 px-10">{userProfile && <LikeButton />}</div>
+        <div className="mt-10 px-10">
+          {userProfile && (
+            <LikeButton
+              likes={post.likes}
+              handleLike={() => handleLike(true)}
+              handleDislike={() => handleLike(false)}
+            />
+          )}
+        </div>
         <Comments />
       </div>
     </div>
