@@ -11,7 +11,11 @@ const NoResults: NextPage<NoResultsProps> = ({ text }) => {
   return (
     <div className="flex flex-col items-center justify-center h-full w-full">
       <p className="text-8xl">
-        {text === "No comments yet" ? <BiCommentX /> : <MdOutlineVideocamOff />}
+        {text === "No comments yet" ? (
+          <BiCommentX className="text-gray-500" />
+        ) : (
+          <MdOutlineVideocamOff className="text-gray-500" />
+        )}
       </p>
       <p className="text-md text-gray-500 text-center mt-2">{text}</p>
     </div>
