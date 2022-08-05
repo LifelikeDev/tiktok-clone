@@ -44,7 +44,7 @@ const VideoCard: NextPage<VideoCardProps> = ({ post, isShowingOnHome }) => {
       <div>
         <div className="flex gap-3 p-2 cursor-pointer font-semibold rounded ">
           <div className="md:w-16 md:h-16 w-10 h-10">
-            <Link href="">
+            <Link href={`/profile/${post.postedBy._id}`}>
               <>
                 <Image
                   src={post.postedBy.image}
@@ -58,9 +58,9 @@ const VideoCard: NextPage<VideoCardProps> = ({ post, isShowingOnHome }) => {
             </Link>
           </div>
 
-          <Link href="/">
+          <Link href={`/profile/${post.postedBy._id}`}>
             <div className="flex flex-col  gap-2">
-              <p className="flex items-center gap-2 md:text-md font-bold text-primary">
+              <p className="flex items-center gap-1 md:text-md font-bold text-primary">
                 {post.postedBy.userName}
                 <GoVerified className="text-[#F51997] text-md" />
               </p>

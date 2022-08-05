@@ -1,14 +1,8 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import { AppUser } from "../types.dev";
 
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-
-export interface AppUser {
-  _id: string;
-  _type: string;
-  userName: string;
-  image: string;
-}
 
 interface DecodedUserDetails {
   name: string;

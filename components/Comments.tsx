@@ -5,7 +5,7 @@ import { GoVerified } from "react-icons/go";
 
 import useAuthStore from "../store/authStore";
 import NoResults from "./NoResults";
-import { AppUser } from "../utils";
+import {AppUser} from "../types.dev"
 
 interface IComments {
   comment: string;

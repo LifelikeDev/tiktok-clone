@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { GoVerified } from "react-icons/go";
 import useAuthStore from "../store/authStore";
-import { AppUser } from "../utils";
+import { AppUser } from "../types.dev";
 
 const SuggestedAccounts = () => {
   const { allUsers, fetchAllUsers } = useAuthStore();
@@ -34,7 +34,7 @@ const SuggestedAccounts = () => {
               </div>
 
               <div className="hidden xl:block">
-                <p className="flex gap-3 items-center text-md text-primary font-bold lowercase">
+                <p className="flex gap-1 items-center text-md text-primary font-bold lowercase">
                   {user.userName.replaceAll(" ", "")}
                   <GoVerified className="text-[#F51997]" />
                 </p>
