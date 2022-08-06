@@ -40,37 +40,39 @@ const VideoCard: NextPage<VideoCardProps> = ({ post, isShowingOnHome }) => {
   };
 
   return (
-    <div className="flex flex-col border-b-2 border-gray-200 pb-6">
-      <div>
-        <div className="flex gap-3 p-2 cursor-pointer font-semibold rounded ">
-          <div className="md:w-16 md:h-16 w-10 h-10">
+    <div className="flex flex-col border-b-1 border-gray-200 pb-6">
+      {isShowingOnHome && (
+        <div>
+          <div className="flex gap-3 p-2 cursor-pointer font-semibold rounded ">
+            <div className="md:w-16 md:h-16 w-10 h-10">
+              <Link href={`/profile/${post.postedBy._id}`}>
+                <>
+                  <Image
+                    src={post.postedBy.image}
+                    width={42}
+                    height={42}
+                    className="rounded-full"
+                    alt="profile"
+                    layout="responsive"
+                  />
+                </>
+              </Link>
+            </div>
+
             <Link href={`/profile/${post.postedBy._id}`}>
-              <>
-                <Image
-                  src={post.postedBy.image}
-                  width={42}
-                  height={42}
-                  className="rounded-full"
-                  alt="profile"
-                  layout="responsive"
-                />
-              </>
+              <div className="flex flex-col  gap-2">
+                <p className="flex items-center gap-1 md:text-md font-bold text-primary">
+                  {post.postedBy.userName}
+                  <GoVerified className="text-[#F51997] text-md" />
+                </p>
+                <p className="capitalize text-gray-500 text-xs font-medium hidden md:block">
+                  {post.postedBy.userName}
+                </p>
+              </div>
             </Link>
           </div>
-
-          <Link href={`/profile/${post.postedBy._id}`}>
-            <div className="flex flex-col  gap-2">
-              <p className="flex items-center gap-1 md:text-md font-bold text-primary">
-                {post.postedBy.userName}
-                <GoVerified className="text-[#F51997] text-md" />
-              </p>
-              <p className="capitalize text-gray-500 text-xs font-medium hidden md:block">
-                {post.postedBy.userName}
-              </p>
-            </div>
-          </Link>
         </div>
-      </div>
+      )}
 
       <div className="lg:ml-20 flex gap-4">
         <div
