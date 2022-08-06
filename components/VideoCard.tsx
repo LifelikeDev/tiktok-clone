@@ -9,7 +9,7 @@ import { GoVerified } from "react-icons/go";
 
 interface VideoCardProps {
   post: Video;
-  isShowingOnHome: boolean;
+  isShowingOnHome?: boolean;
   key?: string;
 }
 
