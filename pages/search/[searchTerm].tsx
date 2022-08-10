@@ -10,14 +10,21 @@ import NoResults from "../../components/NoResults";
 import { Video, AppUser } from "../../types.dev";
 import { BASE_URL } from "../../utils";
 import useAuthStore from "../../store/authStore";
+import { ParsedUrlQuery } from "querystring";
 
 const Search = ({ videos }: { videos: Video[] }) => {
   const [isAccounts, setIsAccounts] = useState<boolean>(true);
   const router = useRouter();
   const { searchTerm } = router.query;
+  const { allUsers } = useAuthStore();
 
   const accounts = isAccounts ? "border-b-4 border-gray-600" : "text-gray-400";
   const isVideos = !isAccounts ? "border-b-4 border-gray-600" : "text-gray-400";
+  const searchedAccounts =
+    searchTerm &&
+    allUsers.filter((user: AppUser) =>
+      user.userName.toLowerCase().includes(searchTerm.toString().toLowerCase())
+    );
 
   return (
     <div className="w-full">
@@ -41,7 +48,9 @@ const Search = ({ videos }: { videos: Video[] }) => {
       ) : (
         <div className="md:mt-16 flex flex-wrap gap-6 md:justify-start">
           {videos.length ? (
-            videos.map((video: Video) => <VideoCard post={video} key={video._id} />)
+            videos.map((video: Video) => (
+              <VideoCard post={video} key={video._id} />
+            ))
           ) : (
             <NoResults text={`No video results for ${searchTerm}`} />
           )}
