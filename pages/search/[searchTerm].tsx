@@ -16,7 +16,7 @@ const Search = ({ videos }: { videos: Video[] }) => {
   const [isAccounts, setIsAccounts] = useState<boolean>(true);
   const router = useRouter();
   const { searchTerm } = router.query;
-  const { allUsers } = useAuthStore();
+  const { allUsers }: { allUsers: AppUser[] } = useAuthStore();
 
   const accounts = isAccounts ? "border-b-4 border-gray-600" : "text-gray-400";
   const isVideos = !isAccounts ? "border-b-4 border-gray-600" : "text-gray-400";
@@ -44,7 +44,40 @@ const Search = ({ videos }: { videos: Video[] }) => {
       </div>
 
       {isAccounts ? (
-        <div>accounts</div>
+        <div className="md:mt-6">
+          {searchedAccounts && searchedAccounts.length ? (
+            searchedAccounts.map((user: AppUser) => (
+              <Link href={`/profile/${user._id}`} key={user._id}>
+                <div
+                  className={`flex gap-3 p-2 cursor-pointer font-semibold rounded hover:bg-gray-100
+                  `}
+                >
+                  <div>
+                    <Image
+                      className="rounded-full"
+                      src={user.image}
+                      alt={`${user.userName}`}
+                      width={50}
+                      height={50}
+                    />
+                  </div>
+
+                  <div className="hidden xl:block">
+                    <p className="flex gap-3 items-center text-md text-primary font-bold lowercase">
+                      {user.userName.replaceAll(" ", "")}
+                      <GoVerified className="text-[#F51997]" />
+                    </p>
+                    <p className="text-gray-400 text-sm capitalize">
+                      {user.userName}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            ))
+          ) : (
+            <NoResults text={`No video results for ${searchTerm}`} />
+          )}
+        </div>
       ) : (
         <div className="md:mt-16 flex flex-wrap gap-6 md:justify-start">
           {videos.length ? (
