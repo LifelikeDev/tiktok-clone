@@ -90,7 +90,7 @@ const Upload = () => {
             {isLoading ? (
               <p>Uploading...</p>
             ) : (
-              <div>
+              <div className="mb-5">
                 {videoAsset ? (
                   <div className="w-[300px]">
                     <video
