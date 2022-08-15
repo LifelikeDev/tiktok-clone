@@ -1,7 +1,7 @@
 import create from "zustand";
 import { persist } from "zustand/middleware";
 import axios from "axios";
-import { AppUser } from "../utils";
+import { AppUser } from "../types.dev";
 
 import { BASE_URL } from "../utils";
 
