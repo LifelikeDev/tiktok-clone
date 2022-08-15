@@ -12,7 +12,6 @@ interface DecodedUserDetails {
 
 export const createOrGetUser = async (response: any, addUser: any) => {
   const decoded: DecodedUserDetails = jwt_decode(response.credential);
-
   const { name, picture, sub } = decoded;
 
   const user: AppUser = {
